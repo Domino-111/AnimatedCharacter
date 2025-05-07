@@ -12,6 +12,8 @@ public class ThirdPersonController : MonoBehaviour
     public float jumpForce = 5;
     public bool grounded = true;
 
+    private Animator ani;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -20,6 +22,7 @@ public class ThirdPersonController : MonoBehaviour
     void Start()
     {
         playerDirection = transform.forward;
+        ani = GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -64,6 +67,16 @@ public class ThirdPersonController : MonoBehaviour
         {
             speed = Mathf.MoveTowards(speed, 0, 5 * Time.deltaTime);
         }
+
+        //Animation Updates
+        ani.SetBool("Walking?", movementVector.magnitude > 0);
+
+        ani.SetBool("Running?", Input.GetKey(KeyCode.LeftShift));
+
+        ani.SetBool("Locked?", Input.GetMouseButton(1));
+
+        ani.SetFloat("X", Input.GetAxis("Horizontal") * (Input.GetKey(KeyCode.LeftShift) ? 2 : 1));
+        ani.SetFloat("Z", Input.GetAxis("Vertical") * (Input.GetKey(KeyCode.LeftShift) ? 2 : 1));
     }
 
     void FixedUpdate()
