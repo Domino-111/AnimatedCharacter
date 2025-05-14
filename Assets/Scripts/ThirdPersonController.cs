@@ -77,6 +77,8 @@ public class ThirdPersonController : MonoBehaviour
 
         ani.SetFloat("X", Input.GetAxis("Horizontal") * (Input.GetKey(KeyCode.LeftShift) ? 2 : 1));
         ani.SetFloat("Z", Input.GetAxis("Vertical") * (Input.GetKey(KeyCode.LeftShift) ? 2 : 1));
+
+        ani.SetBool("Grounded?", grounded);
     }
 
     void FixedUpdate()
